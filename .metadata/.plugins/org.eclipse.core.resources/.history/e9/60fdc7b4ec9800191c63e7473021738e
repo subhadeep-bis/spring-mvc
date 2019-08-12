@@ -1,0 +1,10 @@
+package com.luv2code.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+RequestMapping("/student")
+public class MainController {
+	
+	
+}

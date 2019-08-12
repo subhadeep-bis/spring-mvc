@@ -1,0 +1,40 @@
+package com.luv2code.controller;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.apache.catalina.realm.JNDIRealm.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/customer")
+public class CustomerController {
+
+	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	private Validator validator = factory.getValidator();
+
+	@RequestMapping("/showForm")
+	public String showForm(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "customer-show-form";
+	}
+
+	@RequestMapping("/processForm")
+	public String processForm(@ModelAttribute("customer") Customer customer, BindingResult result) {
+		
+		Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+			
+		if (result.hasErrors()) {
+	        return "customer-show-form";
+	    }
+		return "customer-process-form";
+	}
+}

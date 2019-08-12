@@ -1,0 +1,9 @@
+package com.luv2code.controller;
+
+public class Customer {
+	private String firstName;
+	
+	@NotNull("is required")
+	@Size(min=1, "is required")
+	private String lastName;
+}

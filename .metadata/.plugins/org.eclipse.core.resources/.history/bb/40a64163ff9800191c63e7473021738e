@@ -1,0 +1,30 @@
+package com.luv2code.controller;
+
+import javax.validation.constraints.NotNull;
+
+public class Customer {
+	private String firstName;
+	
+	@Size(min=1, message="is required")
+	private String lastName;
+	
+	public Customer() {
+		super();
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+}

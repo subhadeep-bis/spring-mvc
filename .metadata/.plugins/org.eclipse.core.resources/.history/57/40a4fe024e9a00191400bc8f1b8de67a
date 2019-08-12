@@ -1,0 +1,43 @@
+package com.luv2code.controller;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class Customer {
+	private String firstName;
+	
+	@NotNull(message="Can't be a null Value")
+	@Size(min=1, message="is required")
+	private String lastName;
+	
+	private int freePass;
+	
+	public Customer() {
+		super();
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public int getFreePass() {
+		return freePass;
+	}
+
+	public void setFreePass(int freePass) {
+		this.freePass = freePass;
+	}
+	
+}

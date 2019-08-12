@@ -1,0 +1,58 @@
+package com.luv2code.controller;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/customer")
+public class CustomerController {
+
+	@RequestMapping("/showForm")
+	public String showForm(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "customer-show-form";
+	}
+
+	@RequestMapping("/processForm")
+	public String processForm(@ModelAttribute("customer") Customer customer, BindingResult result) {
+		
+		System.out.println("Last Name: |" + customer.getLastName() + "|");
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+		for (ConstraintViolation<Customer> violation : violations) {
+			String propertyPath = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+            // Add JSR-303 errors to BindingResult
+            // This allows Spring to display them in view via a FieldError
+            result.addError(new FieldError("employee",propertyPath,
+                                   "Invalid "+ propertyPath + "(" + message + ")"));
+		}
+		System.out.println(result);
+		if (result.hasErrors()) {
+	        return "customer-show-form";
+	    }
+		return "customer-process-form";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+	}
+}

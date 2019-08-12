@@ -1,0 +1,7 @@
+package com.luv2code.controller;
+
+@Controller
+@RequestMapping("/customer")
+public class CustomerController {
+
+}

@@ -1,0 +1,4 @@
+127.0.0.1 - - [28/Jun/2019:00:22:10 +0530] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [28/Jun/2019:00:22:11 +0530] "GET /form-tags-data-binding/ HTTP/1.1" 200 189
+0:0:0:0:0:0:0:1 - - [28/Jun/2019:00:22:12 +0530] "GET /form-tags-data-binding/customer/showForm HTTP/1.1" 200 551
+0:0:0:0:0:0:0:1 - - [28/Jun/2019:00:22:15 +0530] "POST /form-tags-data-binding/customer/processForm HTTP/1.1" 200 642

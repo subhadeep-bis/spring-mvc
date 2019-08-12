@@ -1,0 +1,46 @@
+package com.luv2code.controller;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/customer")
+public class CustomerController {
+
+	
+
+	@RequestMapping("/showForm")
+	public String showForm(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "customer-show-form";
+	}
+
+	@RequestMapping("/processForm")
+	public String processForm(@ModelAttribute("customer") Customer customer, BindingResult result) {
+		System.out.println(customer.getFirstName());
+		System.out.println(customer.getLastName().length());
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+		System.out.println("before for loop");
+		for (ConstraintViolation<Customer> violation : violations) {
+		    System.out.println(violation.getMessage());
+		}
+		System.out.println("after for loop and before if");
+
+		if (result.hasErrors()) {
+	        return "customer-show-form";
+	    }
+		return "customer-process-form";
+	}
+}

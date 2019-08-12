@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/aop   
+    	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/context
+  		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<context:component-scan base-package="com.luv2code.spring.aop"/>
+	<aop:aspectj-autoproxy />
+
+	<bean id="simpleCalculator"
+		class="com.luv2code.spring.aop.SimpleCalculator">
+	</bean>
+	
+	<!-- 
+	<bean id="myBeforeAspect"
+		class="com.luv2code.spring.aop.MyBeforeAspect">
+	</bean>
+	
+	<bean id="myAfterAspect"
+		class="com.luv2code.spring.aop.MyAfterAspect"></bean>
+	 -->
+	
+	<bean id="aspect"
+		class="com.luv2code.spring.aop.Aspect"></bean>
+	
+	<!-- 
+	<aop:config>
+		<aop:aspect id="beforeAspect" ref="myBeforeAspect">
+			<aop:pointcut expression="execution(* *.*(..))" id="allMethodsPointCut"/>
+			<aop:before method="myAdvice" pointcut-ref="allMethodsPointCut"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<aop:config>
+		<aop:aspect id="afterAspect" ref="myAfterAspect">
+			<aop:pointcut expression="execution(* com.luv2code.spring.aop.*.*(..))" id="allMethodsInAop"/>
+			<aop:after method="afterAdvice" pointcut-ref="allMethodsInAop"/>
+		</aop:aspect>
+	</aop:config>
+	 -->
+	
+	<aop:config>
+		<aop:aspect id="myAspect" ref="aspect">
+			<aop:pointcut expression="execution(* com.luv2code.spring.aop.*.*(..))" id="pointCut"/>
+	<!-- 	<aop:before method="beforeAdvice" pointcut-ref="pointCut"/>
+			<aop:after method="afterAdvice" pointcut-ref="pointCut" /> -->
+			<aop:after-returning method="afterReturningAdvice" pointcut-ref="pointCut"/>
+			<aop:after-throwing method="afterThrowingAdvice" pointcut-ref="pointCut"/>
+	<!-- 	<aop:around method="aroundAdvice" pointcut-ref="pointCut"/> -->
+		</aop:aspect>
+	</aop:config>
+	
+</beans>
